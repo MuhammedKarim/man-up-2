@@ -430,8 +430,8 @@ function initPrayerTimes() {
       base.setDate(base.getDate() + 1);
     }
     base.setHours(h, m, 0, 0);
-    const start = new Date(base.getTime() + 90 * 60000 - 86400000);
-    const end = new Date(start.getTime() + 180 * 60000);
+    const start = new Date(base.getTime() + 15 * 60000 - 86400000);
+    const end = new Date(start.getTime() + 90 * 60000);
     return now >= start && now < end;
   }
 
@@ -442,7 +442,7 @@ function initPrayerTimes() {
 
   async function pollTaraweehStateAndApply() {
     try {
-      const res = await fetch(`https://taraweeh.muhammedkarim.workers.dev/state/manchester-test?ts=${Date.now()}`, { cache: "no-store" });
+      const res = await fetch(`https://taraweeh.muhammedkarim.workers.dev/state/manchester?ts=${Date.now()}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const state = await res.json();
       if (state.manualEnabled) {
@@ -490,7 +490,7 @@ function initPrayerTimes() {
   checkDhikr();
   checkMakroohPoster();
   preloadAndCheckPosters();
-  // checkLiveStatusAndToggleOverlay();
+  checkLiveStatusAndToggleOverlay();
   pollTaraweehStateAndApply();
   
   setInterval(updateClock, 1000);
@@ -500,7 +500,7 @@ function initPrayerTimes() {
   setInterval(checkFridayDuroodOverlay, 1000);
   setInterval(fetchPrayerTimes, 300000);
   setInterval(refreshPosters, 300000);
-  // setInterval(checkLiveStatusAndToggleOverlay, 5000);
+  setInterval(checkLiveStatusAndToggleOverlay, 5000);
   setInterval(checkVersionAndReload, 60000);
   setInterval(pollTaraweehStateAndApply, 5000);
 }
