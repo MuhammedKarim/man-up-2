@@ -442,7 +442,7 @@ function initPrayerTimes() {
 
   async function pollTaraweehStateAndApply() {
     const now = new Date();
-    if (now.getHours() < 19 || now.getHours() > 22) return
+    // if (now.getHours() < 19 || now.getHours() > 22) return
     try {
       const res = await fetch(`https://taraweeh.muhammedkarim.workers.dev/state/manchester?ts=${Date.now()}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -493,7 +493,7 @@ function initPrayerTimes() {
   checkMakroohPoster();
   preloadAndCheckPosters();
   checkLiveStatusAndToggleOverlay();
-  // pollTaraweehStateAndApply();
+  pollTaraweehStateAndApply();
   
   setInterval(updateClock, 1000);
   setInterval(loadPrayerTimes, 1000);
@@ -504,5 +504,5 @@ function initPrayerTimes() {
   setInterval(refreshPosters, 600000);
   setInterval(checkLiveStatusAndToggleOverlay, 5000);
   setInterval(checkVersionAndReload, 60000);
-  // setInterval(pollTaraweehStateAndApply, 1000);
+  setInterval(pollTaraweehStateAndApply, 1000);
 }
