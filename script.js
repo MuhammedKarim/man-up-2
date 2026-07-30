@@ -334,7 +334,7 @@ function initPrayerTimes() {
       (item.durationSeconds || 20) * 1000
     );
   }
-
+  
   function startPlaylistCycle() {
     if (playlistTimeout || playlistItems.length === 0) return;
     playCurrentItem();
@@ -361,7 +361,6 @@ function initPrayerTimes() {
 
 
   let makroohShowing = false;
-
   function checkMakroohPoster() {
     const now = new Date();
     const { todayStr, tomorrowStr } = getTodayTomorrowStr();
@@ -392,7 +391,7 @@ function initPrayerTimes() {
       .then(res => res.json())
       .then(status => {
         const dimOverlay = document.getElementById('dim-overlay');
-        const shouldShowDim = status.isLive && status.kalimat !== 'kk-bayan';
+        const shouldShowDim = status.isLive && status.kalimat !== 'kk-bayan' && status.kalimat !== 'blank';
         dimOverlay.style.display = shouldShowDim ? 'block' : 'none';
         dimOverlay.style.opacity = shouldShowDim ? '1' : '0';
         if (status.isLive) {
@@ -400,7 +399,8 @@ function initPrayerTimes() {
           startKalimatPolling();
         } else {
           stopKalimatPolling();
-          startPlaylistCycle();        }
+          startPlaylistCycle();
+        }
       })
       .catch(err => {
         console.error('Failed to fetch live status:', err);
